@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="YTZlR777UOEBQzwNSF4ytM8o7RoLAC0kkQy7TCyonoI">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.magicxin.tech","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="今天想起来自己还有个这个 Blog，但因为 http:&#x2F;&#x2F;magicxin.tech 这个域名没有备案，80 和 443 端口被阿里云强制关掉了，所以之前大概有三四个月的时间都是无法正常访问的 这次把域名换成了 https:&#x2F;&#x2F;blog.magicxin.tech 来钻阿里云政策的空子，顺便用了土法Https。域名解析并不是用 CHAME 解析到 https:&#x2F;&#x2F;Magic-Xin.github.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="被弱智bug搞了11个小时">
+<meta property="og:url" content="https://blog.magicxin.tech/2020/08/16/%E8%A2%AB%E5%BC%B1%E6%99%BAbug%E6%90%9E%E4%BA%8611%E4%B8%AA%E5%B0%8F%E6%97%B6/index.html">
+<meta property="og:site_name" content="MagicXin的无聊日常">
+<meta property="og:description" content="今天想起来自己还有个这个 Blog，但因为 http:&#x2F;&#x2F;magicxin.tech 这个域名没有备案，80 和 443 端口被阿里云强制关掉了，所以之前大概有三四个月的时间都是无法正常访问的 这次把域名换成了 https:&#x2F;&#x2F;blog.magicxin.tech 来钻阿里云政策的空子，顺便用了土法Https。域名解析并不是用 CHAME 解析到 https:&#x2F;&#x2F;Magic-Xin.github.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://magicxin-blog-image.oss-cn-beijing.aliyuncs.com/img/20200816115709.png">
+<meta property="article:published_time" content="2020-08-16T11:14:43.000Z">
+<meta property="article:modified_time" content="2020-12-06T16:01:41.735Z">
+<meta property="article:author" content="Magic Xin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://magicxin-blog-image.oss-cn-beijing.aliyuncs.com/img/20200816115709.png">
+
+<link rel="canonical" href="https://blog.magicxin.tech/2020/08/16/%E8%A2%AB%E5%BC%B1%E6%99%BAbug%E6%90%9E%E4%BA%8611%E4%B8%AA%E5%B0%8F%E6%97%B6/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>被弱智bug搞了11个小时 | MagicXin的无聊日常</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175510610-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-175510610-1');
+      }
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?273598842dc646d5ceb906e1706c6bc7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">MagicXin的无聊日常</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description"> </p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+        <li class="menu-item menu-item-unblock-music">
+
+    <a href="/unblock-music/" rel="section"><i class="fa fa-link fa-fw"></i>音乐解锁</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Magic Xin"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Magic Xin</p>
+  <div class="site-description" itemprop="description">何でも知らないわよ、知ってることだけ</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Magic-Xin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Magic-Xin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.magicxin.tech/2020/08/16/%E8%A2%AB%E5%BC%B1%E6%99%BAbug%E6%90%9E%E4%BA%8611%E4%B8%AA%E5%B0%8F%E6%97%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Magic Xin">
+      <meta itemprop="description" content="何でも知らないわよ、知ってることだけ">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MagicXin的无聊日常">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          被弱智bug搞了11个小时
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-16 11:14:43" itemprop="dateCreated datePublished" datetime="2020-08-16T11:14:43+00:00">2020-08-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-06 16:01:41" itemprop="dateModified" datetime="2020-12-06T16:01:41+00:00">2020-12-06</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>今天想起来自己还有个这个 Blog，但因为 <a target="_blank" rel="noopener" href="http://magicxin.tech/">http://magicxin.tech</a> 这个域名没有备案，80 和 443 端口被阿里云强制关掉了，所以之前大概有三四个月的时间都是无法正常访问的</p>
+<p>这次把域名换成了 <a href="https://blog.magicxin.tech/">https://blog.magicxin.tech</a> 来钻阿里云政策的空子，顺便用了土法Https。域名解析并不是用 CHAME 解析到 <a target="_blank" rel="noopener" href="https://magic-xin.github.io/">https://Magic-Xin.github.io</a>, 而是提交了四个 A 记录，分别解析到</p>
+<pre><code>185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153</code></pre>
+<p>从而达到使用 GitHub Pages 提供的 Https 证书</p>
+<p>这个方法是百度来的，不得不说是真的妖啊。唯一的缺点是每次重新部署 GitHub Pages 以后就会收到一封警告邮件，建议你使用 CHAME 解析</p>
+<p>这么久没管这个 Blog，无论是 Hexo 还是 Next 主题都有更新，于是我算是重新精装了一边，填了一些看上去挺好玩儿，但实际没什么用的插件</p>
+<p>顺便还想搞个 GitHub Actions 来实现全自动部署，毕竟以后只要用网页端 GitHub 新建一个 .md 文件，写完了以后自动生成静态页面+自动部署，想想都爽</p>
+<p>然后去 Google 随便搜了一个别人写好的 Actions，准备自己魔改一番就能用了。结果这破玩意我从 0 点折腾到上午 11 点。。。</p>
+<p>Bug 是报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Repository not found.</span><br><span class="line">fatal: Could not read from remote repository.</span><br><span class="line"></span><br><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">##[error]Process completed with exit code 128.</span><br></pre></td></tr></table></figure>
+<p>我一开始以为是 npm 的问题，因为最新版的 Next 主题把之前需要 git clone 的 three 插件打包进 npm 里了。但后来转念一想，那也应该是 npm 报错啊！所以排除了这种可能</p>
+<p>去 Google 转了一圈，StackOverFlow 上说是 GitHub 远程地址设置的问题。然后我就开始围绕着这个点死扣，重新生成 ssh-key 啊，各种改 git remote 啊。基本上 80% 的时间都折腾在这条路上了。结果事实证明，无论是 git remote 设置，还是我的 ssh-key，都没有问题</p>
+<p>这时候我注意到了在这堆报错上面还有一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cloning into &#39;themes&#x2F;next&#x2F;source&#x2F;lib&#x2F;fancybox&#39;...</span><br></pre></td></tr></table></figure>
+
+<p>因为之前接触到的 GitHub Actions 都是编译路由器固件，多线程编译最后输出的结果都是乱的，我也就没往这方面想。但这个 Actions 明显是单线程的，难不成是 git clone 的时候出问题了？</p>
+<p>把 git clone 那两行删了，果然跑过了。再仔细一查，两个项目的 repo 地址应该是 theme-next，我tmd给写成 next-theme 了！</p>
+<p>这么简单一个 Bug 浪费了我将近 11 个小时，我现在严重怀疑我是不是有天生智力缺陷。。。</p>
+<p>最后放个图来让大家感受一下我有多绝望<br><img src="https://magicxin-blog-image.oss-cn-beijing.aliyuncs.com/img/20200816115709.png"></p>
+<p>如果有需要的朋友可以直接去 <a target="_blank" rel="noopener" href="https://github.com/Magic-Xin/blog/tree/master/.github/workflows">GitHub</a> 拿我写好的 Actions，如果后期有空我会专门写一个整合了各种 next 插件的通用版本</p>
+<p><b>咕咕咕！</b></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Magic Xin
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://blog.magicxin.tech/2020/08/16/%E8%A2%AB%E5%BC%B1%E6%99%BAbug%E6%90%9E%E4%BA%8611%E4%B8%AA%E5%B0%8F%E6%97%B6/" title="被弱智bug搞了11个小时">https://blog.magicxin.tech/2020/08/16/被弱智bug搞了11个小时/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/10/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B%E9%98%BF%E9%87%8C%E4%BA%91oss%E7%9A%84%E5%9B%BE%E5%BA%8A/" rel="prev" title="测试一下阿里云oss的图床">
+      <i class="fa fa-chevron-left"></i> 测试一下阿里云oss的图床
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/22/%E6%90%9E%E4%BA%86%E4%B8%AA%E9%9F%B3%E4%B9%90%E4%BA%91%E8%A7%A3%E9%94%81/" rel="next" title="搞了个音乐云解锁">
+      搞了个音乐云解锁 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Magic Xin</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">4k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script defer src="/lib/three.js"></script><script defer src="/lib/lines.js"></script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
